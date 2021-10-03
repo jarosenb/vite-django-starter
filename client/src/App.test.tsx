@@ -2,9 +2,10 @@ import React from 'react';
 import App from './App';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+
 describe('test router', () => {
-  it('test home page', () => {
+  it('test home page', async () => {
     const history = createMemoryHistory();
     history.push('/test');
     render(
@@ -13,6 +14,7 @@ describe('test router', () => {
       </Router>
     );
     expect(screen.getAllByText(/Home/)).toHaveLength(2);
+    expect(await screen.findAllByText(/lazy/)).toHaveLength(1);
   });
 
   it('test about page', () => {
